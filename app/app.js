@@ -86,26 +86,26 @@ var handleClickOnProduct = function(event){
 
 productImageSectionElem.addEventListener('click', handleClickOnProduct);
 
-new ProductPicture('R2D2', 'assets/bag.jpg');
-new ProductPicture('banana', './assets/banana.jpg');
-new ProductPicture('bathroom', './assets/bathroom.jpg');
-new ProductPicture('boots', './assets/boots.jpg');
-new ProductPicture('breakfast', './assets/breakfast.jpg');
-new ProductPicture('bubblegum', './assets/bubblegum.jpg');
-new ProductPicture('chair', './assets/chair.jpg');
-new ProductPicture('cthulhu', './assets/cthulhu.jpg');
-new ProductPicture('dog-duck', './assets/dog-duck.jpg');
-new ProductPicture('dragon', './assets/dragon.jpg');
-new ProductPicture('pen', './assets/pen.jpg');
-new ProductPicture('pet-sweep', './assets/pet-sweep.jpg');
-new ProductPicture('scissors', './assets/scissors.jpg');
-new ProductPicture('shark', './assets/shark.jpg');
-new ProductPicture('sweep', './assets/sweep.jpg');
-new ProductPicture('tauntaun', './assets/tauntaun.jpg');
-new ProductPicture('unicorn', './assets/unicorn.jpg');
-new ProductPicture('usb', './assets/usb.jpg');
-new ProductPicture('water-can', './assets/water-can.jpg');
-new ProductPicture('wine-glass', './assets/wine-glass.jpg'); 
+new ProductPicture('R2D2', './assetts/bag.jpg');
+new ProductPicture('banana', '././assetts/banana.jpg');
+new ProductPicture('bathroom', './assetts/bathroom.jpg');
+new ProductPicture('boots', './assetts/boots.jpg');
+new ProductPicture('breakfast', './assetts/breakfast.jpg');
+new ProductPicture('bubblegum', './assetts/bubblegum.jpg');
+new ProductPicture('chair', './assetts/chair.jpg');
+new ProductPicture('cthulhu', './assetts/cthulhu.jpg');
+new ProductPicture('dog-duck', './assetts/dog-duck.jpg');
+new ProductPicture('dragon', './assetts/dragon.jpg');
+new ProductPicture('pen', './assetts/pen.jpg');
+new ProductPicture('pet-sweep', './assetts/pet-sweep.jpg');
+new ProductPicture('scissors', './assetts/scissors.jpg');
+new ProductPicture('shark', './assetts/shark.jpg');
+new ProductPicture('sweep', '../assetts/sweep.jpg');
+new ProductPicture('tauntaun', './assetts/tauntaun.jpg');
+new ProductPicture('unicorn', './assetts/unicorn.jpg');
+new ProductPicture('usb', './assetts/usb.jpg');
+new ProductPicture('water-can', './assetts/water-can.jpg');
+new ProductPicture('wine-glass', './assetts/wine-glass.jpg'); 
 
 leftProductOnThePage = ProductPicture.allImages[3];
 centerProductOnThePage = ProductPicture.allImages[0];
