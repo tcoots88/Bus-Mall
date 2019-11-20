@@ -12,7 +12,6 @@ var imgElem = [];
 imgElem.push(leftFavoriteProductElem, centerFavoriteProductElem, rightFavoriteProductElem);
 var imgNameElem = [];
 imgNameElem.push(leftProductCaptionElem, centerProductCaptionElem, rightProductCaptionElem);
-console.log('imgElem :', imgElem);
 var imgGen = [];
 var randomArr = [];
 
