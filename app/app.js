@@ -1,114 +1,209 @@
 'use strict';
 
-var productImageSectionElem = document.getElementById('all_products');
-var leftProductImageElem = document.getElementById('left_product_img');
-var centerProductImageElem = document.getElementById('center_product_img');
-var rightProductImageElem = document.getElementById('right_product_img');
-var leftProductCaptionElem = document.getElementById('left_product_h2');
-var centerProductCaptionElem = document.getElementById('center_product_h2');
-var rightProductCaptionElem = document.getElementById('right_product_h2');
+// globals to populate images and captions
+var leftFavoriteProductElem = document.getElementById('left_product_img');
+var centerFavoriteProductElem = document.getElementById('center_product_img');
+var rightFavoriteProductElem = document.getElementById('right_product_img');
+var leftProductCaptionElem = document.getElementById('left_product_caption');
+var centerProductCaptionElem = document.getElementById('center_product_caption');
+var rightProductCaptionElem = document.getElementById('right_product_caption');
+var favProduct = document.getElementById('image-choices');
+var imgElem = [];
+imgElem.push(leftFavoriteProductElem, centerFavoriteProductElem, rightFavoriteProductElem);
+var imgNameElem = [];
+imgNameElem.push(leftProductCaptionElem, centerProductCaptionElem, rightProductCaptionElem);
+console.log('imgElem :', imgElem);
+var imgGen = [];
+var randomArr = [];
 
-var leftProductOnThePage = null;
-var centerProductOnThePage = null;
-var rightProductOnThePage = null;
 
-
-function Product(name, imgUrl) {
+function FavoriteProduct(name, imgURL) {
   this.name = name;
-  this.imgUrl = imgUrl;
+  this.imgURL = imgURL;
   this.clickCtr = 0;
   this.shownCtr = 0;
 
-  Product.allImages.push(this);
+  FavoriteProduct.all.push(this);
+}
+
+// array of products for user to select from
+FavoriteProduct.all = [];
+new FavoriteProduct('R2D2', '/assetts/bag.jpg');
+new FavoriteProduct('banana', 'assetts/banana.jpg');
+new FavoriteProduct('bathroom', 'assetts/bathroom.jpg');
+new FavoriteProduct('boots', 'assetts/boots.jpg');
+new FavoriteProduct('breakfast', 'assetts/breakfast.jpg');
+new FavoriteProduct('bubblegum', 'assetts/bubblegum.jpg');
+new FavoriteProduct('chair', 'assetts/chair.jpg');
+new FavoriteProduct('cthulhu', 'assetts/cthulhu.jpg');
+new FavoriteProduct('dog-duck', 'assetts/dog-duck.jpg');
+new FavoriteProduct('dragon', 'assetts/dragon.jpg');
+new FavoriteProduct('pen', 'assetts/pen.jpg');
+new FavoriteProduct('pet-sweep', 'assetts/pet-sweep.jpg');
+new FavoriteProduct('scissors', 'assetts/scissors.jpg');
+new FavoriteProduct('shark', 'assetts/shark.jpg');
+new FavoriteProduct('sweep', 'assetts/sweep.png');
+new FavoriteProduct('tauntaun', 'assetts/tauntaun.jpg');
+new FavoriteProduct('unicorn', 'assetts/unicorn.jpg');
+new FavoriteProduct('usb', 'assetts/usb.gif');
+new FavoriteProduct('water-can', 'assetts/water-can.jpg');
+new FavoriteProduct('wine-glass', 'assetts/wine-glass.jpg');
+
+// set at 0 for a starting point
+FavoriteProduct.voteCTR = 0;
+FavoriteProduct.maxVote = 25;
+// set max voting limit to 25 votes
+
+function shuffle(array) {
+  var currentIndex = array.length, tempValue, randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    tempValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = tempValue;
+  }
+  return array;
+
+}
+
+function pullProductFromArray() {
+  if (randomArr.length === 0) {
+    randomArr = shuffle(FavoriteProduct.all.slice());
+  }
+  var arrPop = randomArr.pop();
+  return arrPop;
 }
 
 
-Product.allImages = [];
+function generateProducts() {
+  for (var i = 0; i < 3; i++) {
+    imgGen.push(pullProductFromArray());
+    imgElem[i].src = imgGen[i].imgURL;
+    imgNameElem[i].textContent = imgGen[i].name;
+    imgGen[i].shownCtr++;
+  }
+}
 
-var renderNewProduct = function (leftIndex, centerIndex, rightIndex) {
-  leftProductImageElem.src = ProductPicture.allImages[leftIndex].url;
-  centerProductImageElem.src = ProductPicture.allImages[centerIndex].url;
-  rightProductImageElem.src = ProductPicture.allImages[rightIndex].url;
-  leftProductCaptionElem.textContent = ProductPicture.allImages[leftIndex].name;
-  centerProductImageElem.textContent = ProductPicture.allImages[centerIndex].name;
-  rightProductCaptionElem.textContent = ProductPicture.allImages[rightIndex].name;
-};
+function addElement(tag, container, text) {
+  var element = document.createElement(tag);
+  container.appendChild(element);
+  element.textContent = text;
+  return element;
+}
+var resultList = document.getElementById('resultList');
 
-var pickNewProduct = function(){
-  var leftIndex = Math.floor(Math.random() * ProductPicture.allImages.length);
 
-  do {
-    var rightIndex = Math.floor(Math.random() * ProductPicture.allImages.length);
-  } while (rightIndex === leftIndex === centerIndex);
-  console.log(ProductPicture.allImages[leftIndex].name, ProductPicture.allImages[centerIndex].name, ProductPicture.allImages[rightIndex].name);
+function addClick() {
+  var text = '';
 
-  leftProductOnThePage = ProductPicture.allImages[leftIndex];
-  centerProductOnThePage = ProductPicture.allImages[centerIndex];
-  rightProductOnThePage = ProductPicture.allImages[rightIndex];
+  for (var i = 0; i < FavoriteProduct.all.length; i++) {
+    text = `${FavoriteProduct.all[i].name} : ${FavoriteProduct.all[i].clickCtr} votes.`;
+    addElement('li', resultList, text);
+  }
+}
 
-  renderNewProduct(leftIndex, centerIndex, rightIndex);
-};
 
-var handleClickOnProduct = function(event){
-  console.log('im still alive');
-  if(totalClicks < 25){
+favProduct.addEventListener('click', clickHandler);
 
-    var thingWeClickedOn = event.target;
-    var id = thingWeClickedOn.id;
 
-    if(id === 'left_product_img' || id === 'center_product_img' || id === 'right_product_img' ){
-      if(id === 'left_product_img'){
-        leftProductOnThePage.clicks++;
+function clickHandler(event) {
+  var id = event.target.id;
+  console.log('id :', id);
+  if (id === 'left_product_img') {
+    imgGen[0].clickCtr++;
+    console.log('imgGen[0].clickCtr :', imgGen[0].clickCtr);
+  } else if (id === 'center_product_img') {
+    imgGen[1].clickCtr++;
+    console.log('imgGen[1].clickCtr :', imgGen[1].clickCtr);
+  } else if (id === 'right_product_img') {
+    imgGen[2].clickCtr++;
+    console.log('imgGen[2].clickCtr :', imgGen[2].clickCtr);
+  }
+
+  console.log('FavoriteProduct :', FavoriteProduct.all);
+
+  FavoriteProduct.maxVote--;
+  if (FavoriteProduct.maxVote >= 0) {
+    imgGen = [];
+    resultList.innerHTML = '';
+    generateProducts();
+    addClick();
+  } else {
+    favProduct.removeEventListener('click', clickHandler);
+    alert('Thank you for paticipating in this market survey');
+    alert('Please enjoy the chart of the results');
+    postChart();
+
+  }
+
+
+
+
+
+}
+generateProducts();
+addClick();
+
+
+function postChart() {
+  favProduct.innerHTML = '';
+
+  var productName = [];
+  var productVoteTotal = [];
+  var productShownTotal = [];
+
+  for (var i = 0; i < FavoriteProduct.all.length; i++) {
+    var singleProductName = FavoriteProduct.all[i].name;
+    productName.push(singleProductName);
+    var singleProductVoteTotal = FavoriteProduct.all[i].clickCtr;
+    productVoteTotal.push(singleProductVoteTotal);
+    var singleProductShownTotal = FavoriteProduct.all[i].shownCtr;
+    productShownTotal.push(singleProductShownTotal);
+  }
+
+  var barChart = addElement('CANVAS', favProduct);
+  barChart.setAttribute('id', 'productChart');
+
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+      labels: productName,
+      datasets: [{
+        label: 'Product Votes',
+        backgroundColor: 'rgb(0, 0, 255)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: productVoteTotal,
+      },
+      {
+        label: 'Times Shown',
+        backgroundColor: 'rgb(255, 0, 0)',
+        borderColor: 'rgb(0, 0, 0)',
+        data: productShownTotal
+      }]
+    },
+
+    // Configuration options go here
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            max: 6,
+            stepSize: 1,
+          }
+        }]
+      },
+      layout: {
+        width: 800,
+        padding: 50
+
       }
-
-      if(id === 'center_product_img'){
-        centerProductOnThePage.clicks++;
-      }
-
-      if(id === 'right_product_img'){
-        rightProductOnThePage.clicks++;
-      }
-
-      leftProductOnThePage.timesShown++;
-      centerProductOnThePage.timesShown++;
-      rightProductOnThePage.timesShown++;
-
-      pickNewProduct();
     }
-    console.log(event.target.id);
-  }
-  totalClicks++;
-  if(totalClicks === 25){
-    productImageSectionElem.removeEventListener('click', handleClickOnProduct);
-    console.log('you picked 25 products, ');
-  }
-};
-
-productImageSectionElem.addEventListener('click', handleClickOnProduct);
-
-new ProductPicture('R2D2', './assetts/bag.jpg');
-new ProductPicture('banana', '././assetts/banana.jpg');
-new ProductPicture('bathroom', './assetts/bathroom.jpg');
-new ProductPicture('boots', './assetts/boots.jpg');
-new ProductPicture('breakfast', './assetts/breakfast.jpg');
-new ProductPicture('bubblegum', './assetts/bubblegum.jpg');
-new ProductPicture('chair', './assetts/chair.jpg');
-new ProductPicture('cthulhu', './assetts/cthulhu.jpg');
-new ProductPicture('dog-duck', './assetts/dog-duck.jpg');
-new ProductPicture('dragon', './assetts/dragon.jpg');
-new ProductPicture('pen', './assetts/pen.jpg');
-new ProductPicture('pet-sweep', './assetts/pet-sweep.jpg');
-new ProductPicture('scissors', './assetts/scissors.jpg');
-new ProductPicture('shark', './assetts/shark.jpg');
-new ProductPicture('sweep', '../assetts/sweep.jpg');
-new ProductPicture('tauntaun', './assetts/tauntaun.jpg');
-new ProductPicture('unicorn', './assetts/unicorn.jpg');
-new ProductPicture('usb', './assetts/usb.jpg');
-new ProductPicture('water-can', './assetts/water-can.jpg');
-new ProductPicture('wine-glass', './assetts/wine-glass.jpg'); 
-
-leftProductOnThePage = ProductPicture.allImages[3];
-centerProductOnThePage = ProductPicture.allImages[0];
-rightProductOnThePage = ProductPicture.allImages[0];
-
-pickNewProduct();
+  });
+}
