@@ -8,8 +8,8 @@ var leftProductCaptionElem = document.getElementById('left_product_caption');
 var centerProductCaptionElem = document.getElementById('center_product_caption');
 var rightProductCaptionElem = document.getElementById('right_product_caption');
 var favProduct = document.getElementById('image-choices');
-var imgElem = [];
-imgElem.push(leftFavoriteProductElem, centerFavoriteProductElem, rightFavoriteProductElem);
+var productElem = [];
+productElem.push(leftFavoriteProductElem, centerFavoriteProductElem, rightFavoriteProductElem);
 var imgNameElem = [];
 imgNameElem.push(leftProductCaptionElem, centerProductCaptionElem, rightProductCaptionElem);
 var imgGen = [];
@@ -78,7 +78,7 @@ function pullProductFromArray() {
 function generateProducts() {
   for (var i = 0; i < 3; i++) {
     imgGen.push(pullProductFromArray());
-    imgElem[i].src = imgGen[i].imgURL;
+    productElem[i].src = imgGen[i].imgURL;
     imgNameElem[i].textContent = imgGen[i].name;
     imgGen[i].shownCtr++;
   }
