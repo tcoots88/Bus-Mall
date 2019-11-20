@@ -1,4 +1,9 @@
 'use strict';
+// insert greeting to user and possibly collect demographic information. 
+// If demographic information is collected, information can be thrown into the graph
+// Add-in name to the "thank you for playing" message
+
+
 
 // globals to populate images and captions
 var leftFavoriteProductElem = document.getElementById('left_product_img');
@@ -132,6 +137,7 @@ function clickHandler(event) {
     favProduct.removeEventListener('click', clickHandler);
     alert('Thank you for paticipating in this market survey');
     alert('Please enjoy the chart of the results');
+    // document.getElementById("#text").style.padding-top = "15em";
     postChart();
 
   }
