@@ -21,11 +21,11 @@ var imgGen = [];
 var randomArr = [];
 
 
-function FavoriteProduct(name, imgURL) {
+function FavoriteProduct(name, imgURL, clickCtr = 0, shownCtr = 0) {
   this.name = name;
   this.imgURL = imgURL;
-  this.clickCtr = 0;
-  this.shownCtr = 0;
+  this.clickCtr = clickCtr;
+  this.shownCtr = shownCtr;
 
   FavoriteProduct.all.push(this);
 }
@@ -59,19 +59,14 @@ FavoriteProduct.maxVote = 25;
 // set max voting limit to 25 votes
 
 
-// function catalogResults(data) {
-//   var productCount = [];
-//   for (var i = 0; i < data.length; i++) {
-//     productCount.push(data[i]);
-//   }
-//   // console.log(JSON.stringify(productCount));
-//   localStorage.productCount = JSON.stringify(productCount);
-// }
-
-
-
-
-
+function catalogResults(data) {
+  var productCount = [];
+  for (var i = 0; i < data.length; i++) {
+    productCount.push(data[i]);
+  }
+  // console.log(JSON.stringify(productCount));
+  localStorage.productCount = JSON.stringify(productCount);
+}
 
 
 
@@ -156,7 +151,7 @@ function clickHandler(event) {
     // var shift = document.getElementById("#text").style.padding-top = "15em";
     // shift();
     var colorChange = document.getElementById('vote-count').style.color = 'black'
-    // catalogResults(Selectproduct.all);
+    catalogResults(FavoriteProduct.all);
     postChart();
     colorChange;
   }
@@ -165,7 +160,7 @@ console.log('localStorage.getItem(\'productCount\') :', localStorage.getItem('pr
 if (localStorage.getItem('productCount') === null) {
   generateProducts();
 } else {
-  Selectproduct.all = JSON.parse(localStorage.productCount);
+  FavoriteProduct.all = JSON.parse(localStorage.productCount);
   postChart();
 
 }
