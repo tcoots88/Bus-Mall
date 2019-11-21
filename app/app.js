@@ -158,7 +158,7 @@ function clickHandler(event) {
     var colorChange = document.getElementById('vote-count').style.color = 'black'
     // catalogResults(Selectproduct.all);
     postChart();
-    colorChange();
+    colorChange;
   }
 }
 console.log('localStorage.getItem(\'productCount\') :', localStorage.getItem('productCount'));
