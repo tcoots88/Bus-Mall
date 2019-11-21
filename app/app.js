@@ -58,6 +58,23 @@ FavoriteProduct.voteCTR = 0;
 FavoriteProduct.maxVote = 25;
 // set max voting limit to 25 votes
 
+
+// function saveStatsToLocalStorage(data) {
+//   var productStats = [];
+//   for (var i = 0; i < data.length; i++) {
+//     productStats.push(data[i]);
+//   }
+//   // console.log(JSON.stringify(productStats));
+//   localStorage.productStats = JSON.stringify(productStats);
+// }
+
+
+
+
+
+
+
+
 function shuffle(array) {
   var currentIndex = array.length, tempValue, randomIndex;
   while (0 !== currentIndex) {
@@ -95,6 +112,8 @@ function addElement(tag, container, text) {
   element.textContent = text;
   return element;
 }
+// ToDo - resultList needs to move into the same function as chart render
+
 var resultList = document.getElementById('resultList');
 
 
@@ -106,8 +125,6 @@ function addClick() {
     addElement('li', resultList, text);
   }
 }
-
-
 favProduct.addEventListener('click', clickHandler);
 
 
@@ -137,19 +154,15 @@ function clickHandler(event) {
     favProduct.removeEventListener('click', clickHandler);
     alert('Thank you for paticipating in this market survey');
     alert('Please enjoy the chart of the results');
-    // document.getElementById("#text").style.padding-top = "15em";
+    // var shift = document.getElementById("#text").style.padding-top = "15em";
+    // shift();
+    var colorChange = document.getElementById('vote-count').style.color = 'black'
+    colorChange();
     postChart();
-
   }
-
-
-
-
-
 }
 generateProducts();
 addClick();
-
 
 function postChart() {
   favProduct.innerHTML = '';
